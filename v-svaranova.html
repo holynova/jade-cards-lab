@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>系统 · SvaraNova</title>
+<style>
+:root{
+  --paper:#f5f1e6;--card:#fffdf6;--ink:#1d1a14;--mut:#7a7261;--line:#e3d9c1;
+  --accent:#a33b22;--gold:#8a6d1f;--r:10px;--s1:8px;--s2:16px;--s3:24px;--s4:40px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--paper);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Georgia,serif;min-height:100vh}
+header{padding:var(--s4) var(--s3) var(--s2);max-width:1180px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:4px;color:var(--accent);text-transform:uppercase}
+h1{font-family:Georgia,"Songti SC",serif;font-size:32px;font-weight:600;letter-spacing:4px;margin-top:var(--s1)}
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(245,241,230,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tb-in{max-width:1180px;margin:0 auto;padding:var(--s2) var(--s3);display:flex;gap:var(--s2);align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:180px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:10px 16px;font-size:14px;font-family:inherit;color:var(--ink)}
+.search:focus{outline:2px solid var(--accent);outline-offset:1px}
+.chips{display:flex;gap:var(--s1)}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 18px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--mut);transition:all .18s ease-out}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip:focus-visible,.search:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sel{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:10px 14px;font-size:13px;font-family:inherit;color:var(--ink)}
+.count{margin-left:auto;font-size:12px;color:var(--mut);letter-spacing:1px;white-space:nowrap}
+main{max-width:1180px;margin:0 auto;padding:var(--s3) var(--s3) 80px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:var(--s2)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:transform .2s ease-out,box-shadow .2s ease-out;perspective:900px}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(29,26,20,.12)}
+.card .in{position:relative;aspect-ratio:3/4.4;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,.7,.3,1)}
+.card.flip .in{transform:rotateY(180deg)}
+.cf{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cf img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.cf.fr{transform:rotateY(180deg)}
+.meta{padding:12px 14px;border-top:1px solid var(--line)}
+.meta .n{font-size:14px;font-weight:600}
+.meta .r{font-size:11px;color:var(--mut);margin-top:4px;letter-spacing:1px}
+.tag{display:inline-block;margin-top:8px;font-size:10px;letter-spacing:1px;color:var(--gold);border:1px solid var(--line);border-radius:4px;padding:3px 8px}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:60px;letter-spacing:2px}
+.tokens{max-width:1180px;margin:0 auto;padding:0 var(--s3) 70px}
+.tokens h2{font-size:13px;letter-spacing:3px;color:var(--mut);margin-bottom:var(--s2)}
+.sw{display:flex;gap:var(--s1);flex-wrap:wrap}
+.sw div{width:64px;height:44px;border-radius:8px;border:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">SvaraNova · Design Tokens</div>
+<h1>玉石浮雕卡牌馆</h1>
+</header>
+<div class="toolbar"><div class="tb-in">
+<input class="search" id="q" placeholder="搜索卡牌名称…" aria-label="搜索卡牌">
+<div class="chips" id="chips"></div>
+<select class="sel" id="theme" aria-label="主题筛选"></select>
+<span class="count" id="count"></span>
+</div></div>
+<main><div class="grid" id="grid"></div></main>
+<section class="tokens">
+<h2>TOKENS</h2>
+<div class="sw">
+<div style="background:#f5f1e6"></div><div style="background:#fffdf6"></div><div style="background:#1d1a14"></div><div style="background:#a33b22"></div><div style="background:#8a6d1f"></div><div style="background:#e3d9c1"></div>
+</div>
+</section>
+<script src="data.js"></script>
+<script>
+var grid=document.getElementById('grid'),chips=document.getElementById('chips'),
+    q=document.getElementById('q'),themeSel=document.getElementById('theme'),count=document.getElementById('count');
+var cats=['全部','名著','漫画','游戏'],cur='全部',curTheme='全部主题';
+var themeNames=['全部主题'];CARDS.forEach(function(c){if(themeNames.indexOf(c.theme)<0)themeNames.push(c.theme);});
+themeSel.innerHTML=themeNames.map(function(t){return '<option>'+t+'</option>';}).join('');
+chips.innerHTML=cats.map(function(c){return '<button class="chip'+(c===cur?' on':'')+'">'+c+'</button>';}).join('');
+function render(){
+  var kw=q.value.trim();
+  var list=CARDS.filter(function(c){
+    return (cur==='全部'||c.cat===cur)&&(curTheme==='全部主题'||c.theme===curTheme)&&(!kw||c.name.indexOf(kw)>=0);
+  });
+  count.textContent=list.length+' / '+CARDS.length+' 张';
+  grid.innerHTML=list.length?list.map(function(c){
+    return '<div class="card" tabindex="0"><div class="in">'
+    +'<div class="cf"><img loading="lazy" src="'+IMG+c.f+'.webp"></div>'
+    +'<div class="cf fr"><img loading="lazy" src="'+BACK+'"></div></div>'
+    +'<div class="meta"><div class="n">'+c.name+'</div><div class="r">'+c.rank+'</div>'
+    +'<span class="tag">'+c.theme+'</span></div></div>';
+  }).join(''):'<div class="empty">没有匹配的卡牌</div>';
+}
+grid.addEventListener('click',function(e){
+  var cd=e.target.closest('.card');if(cd)cd.classList.toggle('flip');
+});
+grid.addEventListener('keydown',function(e){
+  var cd=e.target.closest('.card');
+  if(cd&&(e.key==='Enter'||e.key===' ')){e.preventDefault();cd.classList.toggle('flip');}
+});
+chips.addEventListener('click',function(e){
+  var b=e.target.closest('.chip');if(!b)return;
+  cur=b.textContent;
+  chips.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x===b);});
+  render();
+});
+q.addEventListener('input',render);
+themeSel.addEventListener('change',function(){curTheme=themeSel.value;render();});
+render();
+</script>
+</body>
+</html>
