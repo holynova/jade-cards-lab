@@ -2,74 +2,12 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>玉石卡牌实验室 · 6 个前端技能的重做</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{background:#0d0b08;color:#e8dcc0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;display:flex;flex-direction:column;overflow:hidden}
-header{padding:18px 26px 0}
-h1{font-size:20px;letter-spacing:8px;color:#d4af37;font-weight:600}
-.sub{font-size:12px;color:#9a8a68;letter-spacing:2px;margin-top:8px}
-.tabs{display:flex;gap:10px;padding:16px 26px;overflow-x:auto;flex-shrink:0}
-.tab{flex:0 0 auto;background:transparent;border:1px solid #4a3d24;border-radius:14px;padding:12px 18px;cursor:pointer;font-family:inherit;color:#e8dcc0;text-align:left;transition:all .2s ease-out;min-width:150px}
-.tab .s{font-size:11px;color:#9a8a68;letter-spacing:1px}
-.tab .n{font-size:16px;letter-spacing:3px;margin-top:5px}
-.tab:hover{border-color:#d4af37}
-.tab.on{background:#d4af37;border-color:#d4af37;color:#171208}
-.tab.on .s{color:#5a4a1a}
-.bar{display:flex;align-items:center;gap:14px;padding:0 26px 12px;flex-shrink:0}
-#phil{font-size:13px;color:#9a8a68;letter-spacing:1px;flex:1}
-#openNew{font-size:13px;color:#d4af37;text-decoration:none;letter-spacing:2px;white-space:nowrap}
-#openNew:hover{text-decoration:underline}
-.view{flex:1;border:0;border-top:1px solid rgba(212,175,55,.2);background:#000}
-@media(max-width:700px){.tab{min-width:120px;padding:10px 12px}}
-</style>
+<meta http-equiv="refresh" content="0;url=v-impeccable.html">
+<title>玉石卡牌实验室 · 金箔版</title>
+<style>body{background:#121110;color:#d9a441;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;display:flex;height:100vh;align-items:center;justify-content:center;margin:0}</style>
 </head>
 <body>
-<header>
-<h1>玉石卡牌实验室</h1>
-<div class="sub">同一座卡牌馆 · 6 个著名前端技能各做一版 · 点下面随时切换</div>
-</header>
-<div class="tabs" id="tabs"></div>
-<div class="bar">
-<span id="phil"></span>
-<a id="openNew" href="#" target="_blank" rel="noopener">↗ 新窗口打开</a>
-</div>
-<iframe class="view" id="view" title="版本预览"></iframe>
-<script>
-var V=[
- {id:'v-emil',skill:'Emil Kowalski',name:'触感',phil:'隐形细节与物理般的动效：跟随指针的倾斜、眩光、弹簧翻面。'},
- {id:'v-impeccable',skill:'Impeccable',name:'金箔',phil:'Neo Kinpaku：大漆黑底上的金箔与铜绿，克制中见华彩。'},
- {id:'v-uiuxkit',skill:'ui-ux-kit',name:'静意',phil:'反 AI 味：克制精准的静奢画廊，点击进灯箱细看。'},
- {id:'v-svaranova',skill:'SvaraNova',name:'系统',phil:'设计 token 驱动：可搜索、可筛选的藏品管理系统。'},
- {id:'v-premiumsaas',skill:'Premium SaaS',name:'聚光',phil:'Noir Spotlight：被精心雕刻的光，主打一张再浏览全集。'},
- {id:'v-liquidglass',skill:'Liquid Glass',name:'流光',phil:'空间感材质：悬浮的磨砂玻璃与彩色光斑。'}
-];
-var tabs=document.getElementById('tabs'),view=document.getElementById('view'),
-    phil=document.getElementById('phil'),openNew=document.getElementById('openNew');
-var cur=0;
-try{var v=parseInt(new URLSearchParams(location.search).get('v'),10);if(v>=1&&v<=V.length)cur=v-1;}catch(e){}
-tabs.innerHTML=V.map(function(x,i){
-  return '<button class="tab'+(i===cur?' on':'')+'"><div class="s">'+x.skill+'</div><div class="n">'+(i+1)+' · '+x.name+'</div></button>';
-}).join('');
-function set(i){
-  cur=i;
-  tabs.querySelectorAll('.tab').forEach(function(t,j){t.classList.toggle('on',j===i);});
-  phil.textContent=V[i].skill+' · '+V[i].phil;
-  view.src=V[i].id+'.html';
-  openNew.href=V[i].id+'.html';
-  var u=new URL(location);u.searchParams.set('v',i+1);history.replaceState(null,'',u);
-}
-tabs.addEventListener('click',function(e){
-  var t=e.target.closest('.tab');if(!t)return;
-  set(Array.prototype.indexOf.call(tabs.children,t));
-});
-document.addEventListener('keydown',function(e){
-  var n=parseInt(e.key,10);
-  if(n>=1&&n<=V.length)set(n-1);
-});
-set(cur);
-</script>
+<p>正在前往金箔版……<a href="v-impeccable.html" style="color:#d9a441">点击进入</a></p>
+<script>location.replace('v-impeccable.html');</script>
 </body>
 </html>
