@@ -1,8 +1,8 @@
 # Jade Cards Lab / 玉石卡牌实验室 · 金箔典藏
 
-中文：玉石浮雕卡牌馆金箔典藏版：收录四大主题 108 张精雕玉石扑克牌，Neo Kinpaku 黑漆金箔风格艺术展陈，支持 3D 翻转、沉浸大图品鉴、分类花色检索与今日灵感抽牌。
+中文：玉石浮雕卡牌馆极简典藏版：收录四大主题 108 张精雕玉石扑克牌，极简正面纯净展陈，支持 PC 端 3D 卡牌倾角与鎏金光影交互、点击全屏大图品鉴，并针对图片加载与体积进行分层优化（Retina WebP 缩略图、零 CLS、异步平滑解码）。
 
-English: Kinpaku Art Edition of the Jade Relief Playing Card Gallery: featuring 108 cards across four themes with Neo Kinpaku black lacquer and gold foil aesthetics, 3D card flipping, full-screen inspection, and celestial oracle draw.
+English: Minimalist Edition of the Jade Relief Playing Card Gallery: featuring 108 cards across four themes with pure front-face presentation, PC 3D tilt and specular sheen interaction, full-screen lightbox inspection, and layered image loading optimization (Retina WebP thumbnails, zero CLS, async decoding).
 
 ![Project screenshot](./assets/screenshot.png)
 
