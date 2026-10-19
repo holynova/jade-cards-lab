@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jade-cards-lab",
+  "compatibility_date": "2026-10-19",
+  "workers_dev": false,
+  "assets": {
+    "directory": "."
+  },
+  "routes": [
+    {
+      "pattern": "jade-cards-lab.xiaosang.cc",
+      "custom_domain": true
+    }
+  ]
+}

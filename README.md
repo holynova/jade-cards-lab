@@ -8,11 +8,23 @@ English: Kinpaku Art Edition of the Jade Relief Playing Card Gallery: featuring 
 
 ## 在线体验 / Live Demo
 
-- [GitHub Pages 在线展馆](https://holynova.github.io/jade-cards-lab/v-impeccable.html)
-- [GitHub 仓库](https://github.com/holynova/jade-cards-lab)
+- [Cloudflare Demo](https://jade-cards-lab.xiaosang.cc/)
+- [GitHub Repo](https://github.com/holynova/jade-cards-lab)
+
+<img src="./assets/qr.png" width="180" alt="扫码访问 Cloudflare 在线体验">
 
 ## 本地运行 / Run locally
 
 ```bash
 python3 -m http.server 8000
 ```
+
+## 发布 / Deploy
+
+```bash
+npx wrangler deploy --config wrangler.jsonc
+```
+
+Cloudflare Workers · Custom Domain: `jade-cards-lab.xiaosang.cc`
+
+源码与部署配置使用同一个主分支；在本地手动发布，不创建 Cloudflare 专用分支或 GitHub Action。
