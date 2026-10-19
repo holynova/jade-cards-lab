@@ -155,16 +155,16 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 24px 20px;
+  align-items: start;
 }
 
 /* 3D Card Item */
 .card-item {
   position: relative;
-  aspect-ratio: var(--card-aspect);
+  aspect-ratio: 2 / 3;
   perspective: 1000px;
   cursor: pointer;
   content-visibility: auto;
-  contain-intrinsic-size: 210px 315px;
   border-radius: 10px;
 }
 
@@ -295,13 +295,16 @@ body {
   position: relative;
   max-width: 85vw;
   max-height: 82vh;
-  aspect-ratio: var(--card-aspect);
+  aspect-ratio: 2 / 3;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 
     0 24px 60px rgba(0, 0, 0, 0.95),
     0 0 0 1px rgba(217, 164, 65, 0.35);
   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox-img-wrap::after {
@@ -317,7 +320,7 @@ body {
 .lightbox-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: opacity 0.3s;
 }
@@ -468,6 +471,7 @@ body {
   var FULL_PREFIX = (typeof IMG !== 'undefined' ? IMG : 'https://holynova.github.io/jade-relief-cards/img/');
   var grid = document.getElementById('grid');
   var lightbox = document.getElementById('lightbox');
+  var lightboxImgWrap = document.querySelector('.lightbox-img-wrap');
   var lightboxImg = document.getElementById('lightboxImg');
   var lightboxClose = document.getElementById('lightboxClose');
   var lightboxPrev = document.getElementById('lightboxPrev');
@@ -478,18 +482,35 @@ body {
   var currentIndex = 0;
   var requestToken = 0;
 
+  var TALL_CARDS = {
+    'fengshen-2-nezha': 1, 'fengshen-5-daji': 1,
+    'guanlan-1-yingmu': 1, 'guanlan-4-chimu': 1, 'guanlan-5-gongcheng': 1,
+    'kenan-2-maolilan': 1, 'kenan-3-jide': 1, 'kenan-5-pingci': 1,
+    'mali-1-maliao': 1, 'mali-5-yaoxi': 1,
+    'shiji-2-bawangbieji': 1, 'shiji-3-hanxindianbing': 1,
+    'wangpai-3-guanggaopai': 1,
+    'wangzhe-3-sunshangxiang': 1, 'wangzhe-4-hanxin': 1, 'wangzhe-5-zhugeliang': 1
+  };
+
+  function getCardDim(f) {
+    if (TALL_CARDS[f]) return { w: 360, h: 720, aspect: '1 / 2' };
+    if (f === 'shiji-1-qinshihuang') return { w: 360, h: 480, aspect: '3 / 4' };
+    return { w: 360, h: 540, aspect: '2 / 3' };
+  }
+
   // 1. Build Minimalist Grid: Pure Images, All Front Face
   // Optimized loading: First 6 cards eager + fetchpriority="high", rest lazy
   var html = '';
   for (var i = 0; i < CARDS.length; i++) {
     var c = CARDS[i];
+    var dim = getCardDim(c.f);
     var thumbSrc = THUMB_PREFIX + c.f + '.webp';
     var isPriority = i < 6;
     var loadingAttr = isPriority ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
 
-    html += '<div class="card-item" data-idx="' + i + '" tabindex="0" role="button" aria-label="' + c.name + ' - ' + c.theme + '">'
+    html += '<div class="card-item" style="aspect-ratio:' + dim.aspect + '" data-idx="' + i + '" tabindex="0" role="button" aria-label="' + c.name + ' - ' + c.theme + '">'
       + '<div class="card-inner">'
-      + '<img class="card-img" src="' + thumbSrc + '" alt="' + c.name + '" ' + loadingAttr + ' width="360" height="540">'
+      + '<img class="card-img" src="' + thumbSrc + '" alt="' + c.name + '" ' + loadingAttr + ' width="' + dim.w + '" height="' + dim.h + '">'
       + '<div class="card-glint"></div>'
       + '</div>'
       + '</div>';
@@ -545,6 +566,11 @@ body {
     currentIndex = index;
     var card = CARDS[index];
     if (!card) return;
+
+    var dim = getCardDim(card.f);
+    if (lightboxImgWrap) {
+      lightboxImgWrap.style.aspectRatio = dim.aspect;
+    }
 
     var currentToken = ++requestToken;
     var thumbUrl = THUMB_PREFIX + card.f + '.webp';
@@ -655,6 +681,24 @@ body {
       else nextCard();
     }
   }, { passive: true });
+
+  // Deep linking: support ?card=index or ?card=name/id
+  var params = new URLSearchParams(window.location.search);
+  var cardQuery = params.get('card');
+  if (cardQuery !== null) {
+    var queryIdx = parseInt(cardQuery, 10);
+    if (isNaN(queryIdx)) {
+      for (var k = 0; k < CARDS.length; k++) {
+        if (CARDS[k].f === cardQuery || CARDS[k].name === cardQuery) {
+          queryIdx = k;
+          break;
+        }
+      }
+    }
+    if (!isNaN(queryIdx) && queryIdx >= 0 && queryIdx < CARDS.length) {
+      showLightbox(queryIdx);
+    }
+  }
 
 })();
 </script>
