@@ -499,35 +499,19 @@ body {
   var currentIndex = 0;
   var requestToken = 0;
 
-  var TALL_CARDS = {
-    'fengshen-2-nezha': 1, 'fengshen-5-daji': 1,
-    'guanlan-1-yingmu': 1, 'guanlan-4-chimu': 1, 'guanlan-5-gongcheng': 1,
-    'kenan-2-maolilan': 1, 'kenan-3-jide': 1, 'kenan-5-pingci': 1,
-    'mali-1-maliao': 1, 'mali-5-yaoxi': 1,
-    'shiji-2-bawangbieji': 1, 'shiji-3-hanxindianbing': 1,
-    'wangpai-3-guanggaopai': 1,
-    'wangzhe-3-sunshangxiang': 1, 'wangzhe-4-hanxin': 1, 'wangzhe-5-zhugeliang': 1
-  };
-
-  function getCardDim(f) {
-    if (TALL_CARDS[f]) return { w: 360, h: 720, aspect: '1 / 2' };
-    if (f === 'shiji-1-qinshihuang') return { w: 360, h: 480, aspect: '3 / 4' };
-    return { w: 360, h: 540, aspect: '2 / 3' };
-  }
-
   // 1. Build Minimalist Grid: Pure Images, All Front Face
+  // All 108 cards are strictly unified to standard 2:3 aspect ratio (360x540 thumbs, 1280x1920 full)
   // Optimized loading: First 6 cards eager + fetchpriority="high", rest lazy
   var html = '';
   for (var i = 0; i < CARDS.length; i++) {
     var c = CARDS[i];
-    var dim = getCardDim(c.f);
     var thumbSrc = THUMB_PREFIX + c.f + '.webp';
     var isPriority = i < 6;
     var loadingAttr = isPriority ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
 
-    html += '<div class="card-item" style="aspect-ratio:' + dim.aspect + '" data-idx="' + i + '" tabindex="0" role="button" aria-label="' + c.name + ' - ' + c.theme + '">'
+    html += '<div class="card-item" data-idx="' + i + '" tabindex="0" role="button" aria-label="' + c.name + ' - ' + c.theme + '">'
       + '<div class="card-inner">'
-      + '<img class="card-img" src="' + thumbSrc + '" alt="' + c.name + '" ' + loadingAttr + ' width="' + dim.w + '" height="' + dim.h + '">'
+      + '<img class="card-img" src="' + thumbSrc + '" alt="' + c.name + '" ' + loadingAttr + ' width="360" height="540">'
       + '<div class="card-glint"></div>'
       + '</div>'
       + '</div>';
@@ -583,13 +567,6 @@ body {
     currentIndex = index;
     var card = CARDS[index];
     if (!card) return;
-
-    var dim = getCardDim(card.f);
-    var ratioVal = dim.w / dim.h;
-    if (lightboxImgWrap) {
-      lightboxImgWrap.style.setProperty('--card-ratio', ratioVal.toFixed(4));
-      lightboxImgWrap.style.setProperty('--card-aspect', dim.aspect);
-    }
 
     var currentToken = ++requestToken;
     var thumbUrl = THUMB_PREFIX + card.f + '.webp';
