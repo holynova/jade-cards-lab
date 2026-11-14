@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>玉石浮雕 · 108 珍藏</title>
+<title>玉石浮雕 108 珍藏</title>
 <meta name="description" content="108 张精雕玉石浮雕扑克牌艺术展陈，极简纯净呈现，支持 PC 端 3D 卡牌光影交互与全屏高清品鉴。">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="e01c9f78-4607-4e60-b01c-77c8190b12b4"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,6 @@
   --bg-deep: #080706;
   --bg-surface: #12100e;
   --gold: #d9a441;
-  --gold-glow: rgba(217, 164, 65, 0.25);
   --paper: #f4efe2;
   --paper-mut: #8e8675;
   --card-aspect: 2 / 3;
@@ -31,9 +30,6 @@
 
 body {
   background: var(--bg-deep);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(217, 164, 65, 0.06) 0%, transparent 60%),
-    radial-gradient(circle at 80% 40%, rgba(94, 168, 155, 0.03) 0%, transparent 50%);
   color: var(--paper);
   font-family: "Noto Serif SC", "Songti SC", STSong, "PingFang SC", serif;
   min-height: 100vh;
@@ -62,9 +58,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(8, 7, 6, 0.85);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: #080706;
   border-bottom: 1px solid rgba(217, 164, 65, 0.15);
   padding: 14px 28px;
   display: flex;
@@ -83,15 +77,15 @@ body {
 .seal {
   width: 24px;
   height: 24px;
-  border: 1.5px solid #c94030;
+  border: 1.5px solid rgba(217, 164, 65, 0.65);
   border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ff8575;
+  color: var(--gold);
   font-size: 11px;
   font-weight: 900;
-  background: rgba(201, 64, 48, 0.15);
+  background: rgba(217, 164, 65, 0.12);
 }
 
 .title {
@@ -142,6 +136,44 @@ body {
   fill: currentColor;
 }
 
+/* Category filter + hint */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.filter-bar button {
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--paper-mut);
+  background: transparent;
+  border: 1px solid rgba(217, 164, 65, 0.18);
+  border-radius: 12px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.filter-bar button:hover {
+  color: var(--gold);
+}
+.filter-bar button.active {
+  color: var(--gold);
+  border-color: rgba(217, 164, 65, 0.5);
+  background: rgba(217, 164, 65, 0.08);
+}
+.filter-bar button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.gallery-hint {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--paper-mut);
+  margin-bottom: 20px;
+}
+
 /* Minimalist Gallery Grid */
 .gallery-wrap {
   width: 100%;
@@ -177,9 +209,7 @@ body {
   background: var(--bg-surface);
   transform-style: preserve-3d;
   transition: transform 0.2s var(--ease-smooth), box-shadow 0.2s var(--ease-smooth);
-  box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(217, 164, 65, 0.22);
+  box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.22);
 }
 
 /* Gilded Frame */
@@ -188,7 +218,7 @@ body {
   position: absolute;
   inset: 4px;
   border: 1px solid rgba(217, 164, 65, 0.35);
-  border-radius: 7px;
+  border-radius: 6px;
   pointer-events: none;
   z-index: 4;
 }
@@ -221,7 +251,6 @@ body {
   .card-item:hover .card-inner {
     box-shadow: 
       0 20px 40px rgba(0, 0, 0, 0.85),
-      0 0 24px var(--gold-glow),
       0 0 0 1px rgba(217, 164, 65, 0.5);
   }
   .card-item:hover .card-glint {
@@ -310,7 +339,7 @@ body {
   position: absolute;
   inset: 6px;
   border: 1px solid rgba(217, 164, 65, 0.4);
-  border-radius: 8px;
+  border-radius: 6px;
   pointer-events: none;
   z-index: 5;
 }
@@ -436,11 +465,11 @@ body {
 <header class="top-bar">
   <a href="https://xiaosang.cc/jade-cards-lab/" class="brand">
     <div class="seal">御</div>
-    <div class="title">玉石浮雕<span class="sub">KINPAKU · 108</span></div>
+    <div class="title">玉石浮雕<span class="sub">KINPAKU 108</span></div>
   </a>
 
   <div class="top-right">
-    <span class="count-pill">108 张精雕</span>
+    <span class="count-pill" id="countPill">108 张精雕</span>
     <a href="https://github.com/holynova/jade-cards-lab" target="_blank" rel="noopener noreferrer" class="github-link" title="GitHub 源码">
       <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
     </a>
@@ -449,6 +478,8 @@ body {
 
 <!-- Minimalist Gallery Stage -->
 <main class="gallery-wrap">
+  <div class="filter-bar" id="filterBar" role="group" aria-label="按类别筛选"></div>
+  <p class="gallery-hint">点卡片看大图，左右滑动换一张</p>
   <div class="gallery-grid" id="grid">
     <!-- Populated by JS -->
   </div>
@@ -502,21 +533,65 @@ body {
   // 1. Build Minimalist Grid: Pure Images, All Front Face
   // All 108 cards are strictly unified to standard 2:3 aspect ratio (360x540 thumbs, 1280x1920 full)
   // Optimized loading: First 6 cards eager + fetchpriority="high", rest lazy
-  var html = '';
-  for (var i = 0; i < CARDS.length; i++) {
-    var c = CARDS[i];
-    var thumbSrc = THUMB_PREFIX + c.f + '.webp';
-    var isPriority = i < 6;
-    var loadingAttr = isPriority ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+  var CATS = ['全部', '名著', '漫画', '游戏', '特别'];
+  var activeCat = '全部';
+  var view = [];
+  var filterBar = document.getElementById('filterBar');
+  var countPill = document.getElementById('countPill');
 
-    html += '<div class="card-item" data-idx="' + i + '" tabindex="0" role="button" aria-label="' + c.name + ' - ' + c.theme + '">'
-      + '<div class="card-inner">'
-      + '<img class="card-img" src="' + thumbSrc + '" alt="' + c.name + '" ' + loadingAttr + ' width="360" height="540">'
-      + '<div class="card-glint"></div>'
-      + '</div>'
-      + '</div>';
+  function catCount(cat) {
+    if (cat === '全部') return CARDS.length;
+    var n = 0;
+    for (var i = 0; i < CARDS.length; i++) if (CARDS[i].cat === cat) n++;
+    return n;
   }
-  grid.innerHTML = html;
+
+  function renderFilterBar() {
+    var html = '';
+    for (var i = 0; i < CATS.length; i++) {
+      var c = CATS[i];
+      html += '<button type="button" data-cat="' + c + '"' + (c === activeCat ? ' class="active" aria-pressed="true"' : ' aria-pressed="false"') + '>' + c + ' ' + catCount(c) + '</button>';
+    }
+    filterBar.innerHTML = html;
+  }
+
+  function renderGrid() {
+    var html = '';
+    for (var p = 0; p < view.length; p++) {
+      var i = view[p];
+      var c = CARDS[i];
+      var thumbSrc = THUMB_PREFIX + c.f + '.webp';
+      var isPriority = p < 6;
+      var loadingAttr = isPriority ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+
+      html += '<div class="card-item" data-idx="' + p + '" tabindex="0" role="button" aria-label="' + c.name + ' - ' + c.theme + '">'
+        + '<div class="card-inner">'
+        + '<img class="card-img" src="' + thumbSrc + '" alt="' + c.name + '" ' + loadingAttr + ' width="360" height="540">'
+        + '<div class="card-glint"></div>'
+        + '</div>'
+        + '</div>';
+    }
+    grid.innerHTML = html;
+  }
+
+  function applyFilter(cat) {
+    activeCat = cat;
+    view = [];
+    for (var i = 0; i < CARDS.length; i++) {
+      if (cat === '全部' || CARDS[i].cat === cat) view.push(i);
+    }
+    renderFilterBar();
+    renderGrid();
+    countPill.textContent = cat === '全部' ? CARDS.length + ' 张精雕' : cat + ' ' + view.length + ' 张';
+  }
+
+  filterBar.addEventListener('click', function(e) {
+    var btn = e.target.closest('button[data-cat]');
+    if (!btn || btn.dataset.cat === activeCat) return;
+    applyFilter(btn.dataset.cat);
+  });
+
+  applyFilter('全部');
 
   // 2. PC Interactive 3D Card Parallax / Tilt Effect
   var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
@@ -565,7 +640,7 @@ body {
   // then seamlessly fades in decoded high-res image over it.
   async function showLightbox(index) {
     currentIndex = index;
-    var card = CARDS[index];
+    var card = CARDS[view[index]];
     if (!card) return;
 
     var currentToken = ++requestToken;
@@ -579,7 +654,7 @@ body {
     lightboxFull.src = '';
 
     capName.textContent = card.name;
-    capMeta.textContent = card.theme + ' · ' + card.rank + ' · ' + (index + 1) + ' / ' + CARDS.length;
+    capMeta.textContent = card.theme + '，' + card.rank + '，' + (index + 1) + ' / ' + view.length;
 
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -623,12 +698,12 @@ body {
   }
 
   function prevCard() {
-    var nextIdx = (currentIndex - 1 + CARDS.length) % CARDS.length;
+    var nextIdx = (currentIndex - 1 + view.length) % view.length;
     showLightbox(nextIdx);
   }
 
   function nextCard() {
-    var nextIdx = (currentIndex + 1) % CARDS.length;
+    var nextIdx = (currentIndex + 1) % view.length;
     showLightbox(nextIdx);
   }
 
