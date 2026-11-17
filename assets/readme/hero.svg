@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="100%">
+  <title>玉石浮雕卡牌馆 · 金箔版 — Jade Relief Card Gallery</title>
+  <desc>Dark gallery backdrop with a jade-relief playing card in gold foil frame; 108 hand-carved jade cards across four categories.</desc>
+  <defs>
+    <radialGradient id="glow" cx="82%" cy="18%" r="55%">
+      <stop offset="0%" stop-color="#d9a441" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#d9a441" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="jade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2e5d46"/>
+      <stop offset="55%" stop-color="#1e3d2f"/>
+      <stop offset="100%" stop-color="#16301f"/>
+    </linearGradient>
+    <linearGradient id="goldline" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0cd7a"/>
+      <stop offset="50%" stop-color="#d9a441"/>
+      <stop offset="100%" stop-color="#a67c2e"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <rect width="1200" height="440" rx="16" fill="#121110"/>
+    <rect width="1200" height="440" rx="16" fill="url(#glow)"/>
+  </g>
+  <!-- left copy -->
+  <g>
+    <g>
+      <rect x="60" y="52" width="218" height="32" rx="16" fill="#1d1a16" stroke="#d9a441" stroke-width="1.2"/>
+      <text x="169" y="74" text-anchor="middle" font-family="'SF Mono', Monaco, Consolas, monospace" font-size="15" font-weight="700" letter-spacing="3" fill="#d9a441">KINPAKU · 金箔版</text>
+    </g>
+    <text x="60" y="160" font-family="-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="62" font-weight="800" fill="#f0cd7a">玉石浮雕卡牌馆</text>
+    <text x="60" y="205" font-family="-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="22" fill="#e8ddc8">108 张精雕玉石扑克 · 极简典藏</text>
+    <text x="60" y="238" font-family="'SF Mono', Monaco, Consolas, monospace" font-size="18" letter-spacing="2" fill="#9a8f7a">JADE RELIEF CARD GALLERY</text>
+    <g font-family="-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" font-weight="700">
+      <g>
+        <rect x="60" y="278" width="132" height="44" rx="10" fill="#1d1a16" stroke="#d9a441" stroke-width="1"/>
+        <text x="126" y="307" text-anchor="middle" fill="#f0cd7a">108 张精雕</text>
+      </g>
+      <g>
+        <rect x="208" y="278" width="132" height="44" rx="10" fill="#1d1a16" stroke="#d9a441" stroke-width="1"/>
+        <text x="274" y="307" text-anchor="middle" fill="#f0cd7a">4 大类别</text>
+      </g>
+      <g>
+        <rect x="356" y="278" width="132" height="44" rx="10" fill="#1d1a16" stroke="#d9a441" stroke-width="1"/>
+        <text x="422" y="307" text-anchor="middle" fill="#f0cd7a">22 个主题</text>
+      </g>
+    </g>
+    <text x="60" y="372" font-family="-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="18" fill="#b8ad97">名著 · 漫画 · 游戏 · 王牌珍藏 —— 每张牌都有牌面与典故</text>
+  </g>
+  <!-- right: jade relief card -->
+  <g transform="translate(830, 36) rotate(2 140 184)">
+    <rect x="0" y="0" width="280" height="368" rx="18" fill="url(#jade)" stroke="url(#goldline)" stroke-width="3"/>
+    <rect x="14" y="14" width="252" height="340" rx="12" fill="none" stroke="#d9a441" stroke-width="1" stroke-opacity="0.7"/>
+    <rect x="22" y="22" width="236" height="324" rx="8" fill="none" stroke="#d9a441" stroke-width="0.6" stroke-opacity="0.4"/>
+    <!-- corner ranks -->
+    <text x="34" y="66" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#f0cd7a">K</text>
+    <text x="34" y="96" font-family="Georgia, serif" font-size="26" fill="#f0cd7a">♠</text>
+    <!-- relief medallion: mountains + moon + clouds -->
+    <circle cx="140" cy="150" r="86" fill="#0f241a" stroke="#d9a441" stroke-width="1.5" stroke-opacity="0.8"/>
+    <circle cx="168" cy="118" r="22" fill="#f0cd7a"/>
+    <polygon points="70,205 118,128 150,175 178,138 210,205" fill="#3d7a58"/>
+    <polygon points="70,205 105,158 132,190 160,162 210,205" fill="#2a5c41"/>
+    <polygon points="70,205 122,172 158,196 210,205" fill="#1d4430"/>
+    <g fill="#cfe8d8" fill-opacity="0.85">
+      <ellipse cx="104" cy="216" rx="26" ry="7"/>
+      <ellipse cx="158" cy="226" rx="32" ry="8"/>
+      <ellipse cx="196" cy="212" rx="20" ry="6"/>
+    </g>
+    <!-- red seal -->
+    <g>
+      <rect x="196" y="262" width="34" height="34" rx="4" fill="#a83226"/>
+      <text x="213" y="287" text-anchor="middle" font-family="-apple-system, 'PingFang SC', sans-serif" font-size="20" font-weight="700" fill="#f5e6d0">玉</text>
+    </g>
+    <text x="140" y="318" text-anchor="middle" font-family="-apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif" font-size="20" font-weight="700" fill="#e8ddc8">大闹天宫 · 黑桃 K</text>
+  </g>
+  <!-- gold corner ticks -->
+  <g stroke="#d9a441" stroke-width="2" stroke-linecap="round">
+    <path d="M24 44 V28 Q24 24 28 24 H44" fill="none"/>
+    <path d="M1176 44 V28 Q1176 24 1172 24 H1156" fill="none"/>
+    <path d="M24 396 V412 Q24 416 28 416 H44" fill="none"/>
+    <path d="M1176 396 V412 Q1176 416 1172 416 H1156" fill="none"/>
+  </g>
+</svg>
